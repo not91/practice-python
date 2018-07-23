@@ -7,7 +7,7 @@ import re
 def worker(url, search_string):
     try:
         text = requests.get(url, timeout=5).text
-        words = re.findall(search_string, text)
+        words = re.findall(r'[^a-zA-Zа-яА-я0-9]' + search_string + r'[^a-zA-Zа-яА-я0-9]', text)
         return {url: len(words)}
     except (requests_exc.HTTPError,
             requests_exc.ConnectTimeout, requests_exc.RequestException) as err:
